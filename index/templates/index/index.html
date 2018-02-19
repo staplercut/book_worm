@@ -1,0 +1,19 @@
+{% extends 'index/base.html' %}
+
+
+{% block content %}
+
+	{% for book in books %}
+		<div class="col-md-1 item">
+			<h1><a href="{% url 'book_detail' pk=item.pk %}">{{ book.title }}</a></h1>
+			<p>{{ book.description|linebreaksbr }}</p>
+		</div>
+	{% endfor %}
+
+    {% for authors in Author %}
+		<div class="col-md-1 item">
+			<h1><a href="{% url 'author_detail' pk=item.pk %}">{{ author.name }}</a></h1>
+		</div>
+	{% endfor %}
+
+{% endblock %}
