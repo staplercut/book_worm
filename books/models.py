@@ -3,21 +3,20 @@ from django.utils import timezone
 from django.conf import settings
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
+# class Tag(models.Model):
+#    name = models.CharField(max_length=20)
+#
+#    def __str__(self):
+#        return self.name
 
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=40)
-    tags = models.ManyToManyField(Tag)
+    name = models.CharField(max_length=30)
+    tags = models.TextField(default="")
     published_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+        return self.name
 
 
 class Review(models.Model):
@@ -41,8 +40,9 @@ class Book(models.Model):
     post_author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     year_issued = models.SmallIntegerField()
     authors = models.ManyToManyField(Author)
-    tags = models.ManyToManyField(Tag)
-    publication_no = models.SmallIntegerField()
+    author = models.CharField(max_length=30, default="")
+    tags = models.TextField(default="")
+    publication_no = models.SmallIntegerField(default='1')
     isbn = models.SmallIntegerField()
     book_cover = models.ImageField(upload_to='pics/', default='pics/None/no_cover.jpg')
     created_date = models.DateTimeField(default=timezone.now)
@@ -57,4 +57,3 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-
