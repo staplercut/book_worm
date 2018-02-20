@@ -10,9 +10,9 @@ def book_new(request):
     if request.method == "POST":
         author_list = []
         if 'post author' in request.POST:
-            form = BookForm(request.POST)
+            form = AuthorForm(request.POST)
             if form.is_valid():
-                author = form.cleaned_data['author']
+                author = form.save(commit=False)
                 author_list.extend(author)
         elif 'post book' in request.POST:
             form = BookForm(request.POST)
