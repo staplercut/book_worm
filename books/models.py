@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
@@ -37,10 +38,9 @@ class Review(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    post_author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    post_author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
     year_issued = models.SmallIntegerField()
-    authors = models.ManyToManyField(Author)
-    author = models.CharField(max_length=30, default="")
+    authors = models.ManyToManyField(Author, null=True, blank=True)
     tags = models.TextField(default="")
     publication_no = models.SmallIntegerField(default='1')
     isbn = models.SmallIntegerField()

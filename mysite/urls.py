@@ -20,6 +20,5 @@ from django.conf.urls import include, url
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('index.urls', namespace='index')),
-    url(r'^book', include('books.urls')),
-    url(r'^author', include('books.urls')),
+    url(r'^book/', include('books.urls', namespace='books')),
 ]

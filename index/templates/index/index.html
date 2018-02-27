@@ -3,17 +3,25 @@
 
 {% block content %}
 
-	{% for book in books %}
-		<div class="col-md-1 item">
-			<h1><a href="{% url 'book_detail' pk=item.pk %}">{{ book.title }}</a></h1>
-			<p>{{ book.description|linebreaksbr }}</p>
-		</div>
-	{% endfor %}
+        <h2>Выборка книг</h2>
+        {% for book in books_all %}
+            <div class="books_index">
+                <h2><a href="{% url 'books:book_detail' pk=book.pk %}">{{ book.title }}</a></h2>
+                <p>{{ book.description|linebreaksbr }}</p>
+                <p>Authors: {% for author in book.authors.all %}{{ author }}{% if author != book.authors.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
+            </div>
+        {% endfor %}
+    <br>
+        <h2>Выборка авторов</h2>
+        {% for author in authors_all %}
+            <div class="authors_index">
+                <h2><a href="{% url 'books:author_detail' pk=author.pk %}">{{ author.name }}</a></h2>
+                <p>Books: {% for title in author.book_set.all %}{{ title }}{% if title != author.book_set.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
+            </div>
+        {% endfor %}
 
-    {% for authors in Author %}
-		<div class="col-md-1 item">
-			<h1><a href="{% url 'author_detail' pk=item.pk %}">{{ author.name }}</a></h1>
-		</div>
-	{% endfor %}
+
+
+
 
 {% endblock %}

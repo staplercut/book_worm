@@ -1,0 +1,13 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+    <div class="book-detail">
+		<a class="btn btn-default" href="{% url 'books:book_edit' pk=book.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+		<h1>{{ book.title }}</h1>
+		        <p>{{ book.description|linebreaksbr }}</p>
+                <p>Authors: {% for author in book.authors.all %}{{ author }}{% if author != book.authors.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
+        <a href="{% url 'books:book_delete' pk=book.pk %}" class="btn btn-default">Delete</a>
+    </div>
+
+{% endblock %}

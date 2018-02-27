@@ -5,9 +5,11 @@ from books.models import Book, Author
 
 
 def index(request):
-    books = Book.objects.all()
-    authors = Author.objects.all()
-    return render(request, 'index/index.html', {'books': books}, {'authors': authors})
+    books_all = Book.objects.all()
+    authors_all = Author.objects.all()
+    print(books_all)
+    print(authors_all)
+    return render(request, 'index/index.html', {'authors_all': authors_all, 'books_all': books_all})
 
 
 
