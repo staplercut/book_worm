@@ -9,6 +9,9 @@ import string
 
 def book_add(request, book, form):
     book.published_date = timezone.now()
+
+    #book.book_cover = request.FILES['book_cover']
+
     authors = form.cleaned_data['author_input']
     authors_list = list(filter(None, (' '.join(x.split()) for x in authors.split(','))))
     print(authors_list)
@@ -22,16 +25,15 @@ def book_add(request, book, form):
             author = Author(name=x)
             author.save()
             book.authors.add(author)
-    print(book)
-    print(book.authors)
     return redirect('books:book_detail', pk=book.pk)
 
 
 def book_new(request):
     if request.method == "POST":
-        form = BookForm(request.POST)
+        form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.save(commit=False)
+
             t = form.cleaned_data['title']
             book.title = ' '.join(
                 w.capitalize() for w in t.translate(str.maketrans('', '', string.punctuation)).split())
@@ -50,9 +52,11 @@ def book_edit(request, pk):
     authors = ", ".join(getattr(author, 'name') for author in book.authors.all())
     print(authors)
     if request.method == "POST":
-        form = BookForm(request.POST, instance=book)
+        form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             book = form.save(commit=False)
+            #print(request.FILES.keys())
+            print(book.book_cover)
             return book_add(request, book, form)
     else:
         form = BookForm(instance=book, initial={'author_input': authors})

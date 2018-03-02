@@ -45,7 +45,7 @@ class Book(models.Model):
     tags = models.TextField(default="")
     publication_no = models.SmallIntegerField(default='1')
     isbn = models.SmallIntegerField()
-    book_cover = models.ImageField(upload_to='pics/', default='pics/None/no_cover.jpg')
+    book_cover = models.ImageField(upload_to='pics/', default='pics/None/no_cover.png')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 

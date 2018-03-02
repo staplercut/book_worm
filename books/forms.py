@@ -5,7 +5,7 @@ from .models import Book, Author
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ('title', 'author_input', 'description', 'year_issued', 'publication_no', 'isbn', 'tags')
+        fields = ('title', 'author_input', 'description', 'year_issued', 'publication_no', 'isbn', 'tags', 'book_cover')
 
     author_input = forms.CharField(widget=forms.Textarea(attrs={'cols': 40, 'rows': 5}))
 

@@ -1,13 +1,15 @@
 {% extends 'index/base.html' %}
+{% load staticfiles %}
 
 {% block content %}
     <div class="book-detail">
 		<a class="btn btn-default" href="{% url 'books:book_edit' pk=book.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
 		<h1>{{ book.title }}</h1>
-		        <p>{{ book.description|linebreaksbr }}</p>
-                <p>Authors: {% for author in book.authors.all %}{{ author }}{% if author != book.authors.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
-                <p>Tags: {% for tag in book.tags.split %}<a href="">{{ tag }}</a> {% endfor %}</p>
+                <img src="{{ book.book_cover.url }}" class="book_cover">
+		        <p>Описение: {{ book.description|linebreaksbr }}</p>
+        <p>Авторы: {% for author in book.authors.all %}<a href="{% url 'books:author_detail' pk=author.pk %}">{{ author }}</a>{% if author != book.authors.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
+                <p>Теги: {% for tag in book.tags.split %}<a href="">{{ tag }}</a> {% endfor %}</p>
         <a href="{% url 'books:book_delete' pk=book.pk %}" class="btn btn-default">Delete</a>
     </div>
 
