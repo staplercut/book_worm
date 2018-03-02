@@ -6,11 +6,10 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ('title', 'author_input', 'description', 'year_issued', 'publication_no', 'isbn', 'tags')
-        unique_together =(('title, aut'))
 
     author_input = forms.CharField(widget=forms.Textarea(attrs={'cols': 40, 'rows': 5}))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,  *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)
         self.fields['title'].required = True
         self.fields['tags'].required = True

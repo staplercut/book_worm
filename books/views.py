@@ -9,7 +9,6 @@ import string
 
 def book_add(request, book, form):
     book.published_date = timezone.now()
-
     authors = form.cleaned_data['author_input']
     authors_list = list(filter(None, (' '.join(x.split()) for x in authors.split(','))))
     print(authors_list)
@@ -48,13 +47,15 @@ def book_new(request):
 
 def book_edit(request, pk):
     book = get_object_or_404(Book, pk=pk)
+    authors = ", ".join(getattr(author, 'name') for author in book.authors.all())
+    print(authors)
     if request.method == "POST":
-        form = BookForm(request.POST)
+        form = BookForm(request.POST, instance=book)
         if form.is_valid():
             book = form.save(commit=False)
             return book_add(request, book, form)
     else:
-        form = BookForm(instance=book)
+        form = BookForm(instance=book, initial={'author_input': authors})
         return render(request, 'books/book_edit.html', {'form': form})
 
 
@@ -63,9 +64,54 @@ def book_detail(request, pk):
     return render(request, 'books/book_detail.html', {'book': book})
 
 
+def author_new(request):
+    if request.method == "POST":
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            author = form.save(commit=False)
+            author.published_date = timezone.now()
+            x = form.cleaned_data['name']
+            author.name = ' '.join(y.capitalize() for y in x.split())
+            author.post_author = request.user
+            if Author.objects.filter(name=author.name).exists():
+                return HttpResponse('Author already exists')
+            else:
+                author.save()
+                return redirect('books:author_detail', pk=author.pk)
+    else:
+        form = AuthorForm()
+        return render(request, 'books/author_edit.html', {'form': form})
+
+
+def author_edit(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    if request.method == "POST":
+        form = AuthorForm(request.POST, instance=author)
+        if form.is_valid():
+            author = form.save(commit=False)
+            author.published_date = timezone.now()
+            author.post_author = request.user
+            author.save()
+            return redirect('books:author_detail', pk=author.pk)
+    else:
+        form = AuthorForm(instance=author)
+        return render(request, 'books/author_edit.html', {'form': form})
+
+
+def author_detail(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    return render(request, 'books/author_detail.html', {'author': author})
+
+
 def book_delete(request, pk):
     book = get_object_or_404(Book, pk=pk)
     book.delete()
+    return redirect('index:index')
+
+
+def author_delete(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    author.delete()
     return redirect('index:index')
 
 
@@ -80,22 +126,7 @@ def upload_pic(request, pk):
     return HttpResponseForbidden('allowed only via POST')
 
 
-def author_new(request):
-    if request.method == "POST":
-        form = AuthorForm(request.POST)
-        if form.is_valid():
-            author = form.save(commit=False)
-            author.published_date = timezone.now()
-            author.save()
-            return redirect('author_detail')
-    else:
-        form = BookForm()
-    return render(request, 'books/author_edit.html', {'form': form})
 
-
-def author_detail(request, pk):
-    item = get_object_or_404(Author, pk=pk)
-    return render(request, 'books/author_detail.html', {'item': item})
 
 
 

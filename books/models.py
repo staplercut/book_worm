@@ -15,6 +15,7 @@ class Author(models.Model):
     name = models.CharField(max_length=30)
     tags = models.TextField(default="")
     published_date = models.DateTimeField(blank=True, null=True)
+    post_author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -40,7 +41,7 @@ class Book(models.Model):
     description = models.TextField()
     post_author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
     year_issued = models.SmallIntegerField()
-    authors = models.ManyToManyField(Author, null=True, blank=True)
+    authors = models.ManyToManyField(Author, blank=True)
     tags = models.TextField(default="")
     publication_no = models.SmallIntegerField(default='1')
     isbn = models.SmallIntegerField()
