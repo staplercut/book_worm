@@ -123,4 +123,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/yzuev/djangoprojects/book_worm/site_media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'site_media')

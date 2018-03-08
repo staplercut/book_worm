@@ -10,6 +10,7 @@
 		        <p>Описение: {{ book.description|linebreaksbr }}</p>
         <p>Авторы: {% for author in book.authors.all %}<a href="{% url 'books:author_detail' pk=author.pk %}">{{ author }}</a>{% if author != book.authors.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
                 <p>Теги: {% for tag in book.tags.split %}<a href="">{{ tag }}</a> {% endfor %}</p>
+        <p>Updated: {{ book.published_date }}:</p>
         <a href="{% url 'books:book_delete' pk=book.pk %}" class="btn btn-default">Delete</a>
     </div>
 

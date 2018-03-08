@@ -49,9 +49,13 @@ class Book(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
-    def publish(self):
+    def save(self, **kwargs):
         self.published_date = timezone.now()
-        self.save()
+        super(Book, self).save(**kwargs)
+
+    # def publish(self):
+    #     self.published_date = timezone.now()
+    #     self.save()
 
     def approved_reviews(self):
         return self.reviews.filter(approved_review=True)
