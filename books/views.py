@@ -14,7 +14,6 @@ def book_add(request, book, form):
 
     authors = form.cleaned_data['author_input']
     authors_list = list(filter(None, (' '.join(x.split()) for x in authors.split(','))))
-    print(authors_list)
     book.save()
     for x in authors_list:
         x = ' '.join(y.capitalize() for y in x.split())
