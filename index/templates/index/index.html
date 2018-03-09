@@ -8,7 +8,7 @@
             <div class="books_index">
                 <h2><a href="{% url 'books:book_detail' pk=book.pk %}">{{ book.title }}</a></h2>
                 <p>{{ book.description|linebreaksbr }}</p>
-                <p>Authors: {% for author in book.authors.all %}{{ author }}{% if author != book.authors.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
+                <p><b>Authors:</b> {% for author in book.authors.all %}{{ author }}{% if author != book.authors.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
             </div>
         {% endfor %}
     <br>
@@ -16,7 +16,7 @@
         {% for author in authors_all %}
             <div class="authors_index">
                 <h2><a href="{% url 'authors:author_detail' pk=author.pk %}">{{ author.name }}</a></h2>
-                <p>Books: {% for title in author.book_set.all %}{{ title }}{% if title != author.book_set.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
+                <p><b>Books:</b> {% for title in author.book_set.all %}{{ title }}{% if title != author.book_set.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
             </div>
         {% endfor %}
 
