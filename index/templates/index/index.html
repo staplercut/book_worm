@@ -15,7 +15,7 @@
         <h2>Выборка авторов</h2>
         {% for author in authors_all %}
             <div class="authors_index">
-                <h2><a href="{% url 'books:author_detail' pk=author.pk %}">{{ author.name }}</a></h2>
+                <h2><a href="{% url 'authors:author_detail' pk=author.pk %}">{{ author.name }}</a></h2>
                 <p>Books: {% for title in author.book_set.all %}{{ title }}{% if title != author.book_set.last %}{{ ", " }}{% endif %}{% endfor %}.</p>
             </div>
         {% endfor %}

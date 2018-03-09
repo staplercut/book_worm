@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('index.urls', namespace='index')),
     url(r'^book/', include('books.urls', namespace='books')),
+    url(r'^author/', include('authors.urls', namespace='authors')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
