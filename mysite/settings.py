@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'authors',
     'reviews',
     'tags',
+    'accounts',
+
 
 ]
 
@@ -106,6 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+    ]
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -127,3 +133,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'site_media')
+
+AUTH_USER_MODEL = 'accounts.User'
+
+

@@ -8,6 +8,16 @@
         <link href="https://fonts.googleapis.com/css?family=Tangerine&subset=latin,cyrillic" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="{% static 'css/index.css' %}">
         <title>Book WORM</title>
+        {% if user.is_authenticated %}
+            <div class="logged-user">
+                <a href="{% url 'accounts:logout_view' %}">Welcome, {{ user.email }}! Logout</a>
+            </div>
+        {% else %}
+            <div class="logged-user">
+                <a href="{% url 'accounts:login_view' %}">Login</a>
+                <a href="{% url 'accounts:signup' %}">Signup</a>
+            </div>
+        {% endif %}
     </head>
     <body>
 		<div class="page-header">
@@ -25,6 +35,7 @@
 				</div>
 			</div>
 		</div>
-</body>
+
+
     </body>
 </html>
