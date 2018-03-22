@@ -16,18 +16,12 @@ def login_view(request):
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
             user = authenticate(username=email, password=password)
-            print(email)
-            print(password)
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(reverse('index:index'))
-
             else:
-                print('user none')
-                print(user)
                 return render(request, 'accounts/login.html', {'form': form})
         else:
-            print('form invalid')
             return render(request, 'accounts/login.html', {'form': form})
     else:
         form = LoginForm()
@@ -51,3 +45,7 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
+
+
+def profile_view(request):
+    return render(request, 'accounts/profile.html')

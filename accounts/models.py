@@ -5,11 +5,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 
-class Profile(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
+#class Profile(models.Model):
+#    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#    bio = models.TextField(max_length=500, blank=True)
+#    location = models.CharField(max_length=30, blank=True)
+#    birth_date = models.DateField(null=True, blank=True)
 
 
 #@receiver(post_save, sender=User)
@@ -56,6 +56,8 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    profile_pic = models.ImageField(
+        upload_to='pics/profile_pics/', default='pics/profile_pics/None/blank.png')
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = UserManager()

@@ -1,0 +1,7 @@
+{% extends 'index/base.html' %}
+{% block content %}
+    <h2>{{ request.user }} profile.</h2>
+    <div class="user-detail">
+        <img src="{{ request.user.profile_pic.url }}" class="profile_pic"><br />
+    </div>
+{% endblock %}

@@ -10,7 +10,8 @@
         <title>Book WORM</title>
         {% if user.is_authenticated %}
             <div class="logged-user">
-                <a href="{% url 'accounts:logout_view' %}">Welcome, {{ user.email }}! Logout</a>
+                <a href="{% url 'accounts:profile_view' %}">Welcome, {{ user.email }}!  </a>
+                <a href="{% url 'accounts:logout_view' %}">Logout</a>
             </div>
         {% else %}
             <div class="logged-user">
