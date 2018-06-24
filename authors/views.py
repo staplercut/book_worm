@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from books.models import Author
 from .forms import AuthorForm
-from django.http import HttpResponse
 
 
 def author_new(request):
@@ -11,14 +10,19 @@ def author_new(request):
         if form.is_valid():
             author = form.save(commit=False)
             author.published_date = timezone.now()
-            x = form.cleaned_data['name']
-            author.name = ' '.join(y.capitalize() for y in x.split())
             author.post_author = request.user
-            if Author.objects.filter(name=author.name).exists():
-                return HttpResponse('Author already exists')
-            else:
-                author.save()
-                return redirect('authors:author_detail', pk=author.pk)
+            author.save()
+
+            # FIXME No need to make handle validation in view, it is a part of form clean method
+            # x = form.cleaned_data['name']
+            # author.name = ' '.join(y.capitalize() for y in x.split())
+
+            # FIXME No need to make handle validation, it is a part of form validation by model attrs
+            # if Author.objects.filter(name=author.name).exists():
+            #     return HttpResponse('Author already exists')
+            # else:
+            return redirect('authors:author_detail', pk=author.pk)
+        return render(request, 'authors/author_edit.html', {'form': form})
     else:
         form = AuthorForm()
         return render(request, 'authors/author_edit.html', {'form': form})
@@ -34,6 +38,7 @@ def author_edit(request, pk):
             author.post_author = request.user
             author.save()
             return redirect('authors:author_detail', pk=author.pk)
+        return render(request, 'authors/author_edit.html', {'form': form})
     else:
         form = AuthorForm(instance=author)
         return render(request, 'authors/author_edit.html', {'form': form})
