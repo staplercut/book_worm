@@ -56,6 +56,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    is_confirmed = models.BooleanField(default=False)
     profile_pic = models.ImageField(
         upload_to='pics/profile_pics/', default='pics/profile_pics/None/blank.png')
     USERNAME_FIELD = 'email'
